@@ -1,0 +1,69 @@
+
+ROM used:   1340/8192 (16%)
+            1340/8192 (16%) including unused fragments
+
+            1.0 Average locations per line
+            7.3 Average locations per statement
+
+RAM used:   23/368 (6%) at main() level
+            77/368 (21%) worst case
+
+Stack used: 3 worst case (2 in main + 1 for interrupts)
+Stack size: 8
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+  149    52  28  main.c
+    7     0   0  main.h
+  707     0   0  ..\..\..\..\..\..\..\Program Files (x86)\PICC\Devices\16F877A.h
+  456   131  72  ..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\lcd.c
+----- -----
+ 1319   183 Total
+
+Page ROM  %  RAM    Vol Diff  Functions:
+---- --- --- ---    --- ----  ----------
+0     15   1    1             @delay_us1
+ Inline         5    294  6.7  round
+ Inline        13     59  4.2  @MULFF
+ Inline        10    179  3.3  @FLT
+0     31   2    4    460  4.7  @SFTOI
+0     21   2    3    814  7.2  @DIV88
+0    321  24   16    208  6.3  @ADDFF
+0    202  15   14    354  4.7  @DIVFF
+0      7   1    0     17  1.3  EXT_isr
+0     26   2    0    102  2.9  TIMER0_isr
+0     15   1    2     24  1.2  set_pin
+0     32   2    6    294  6.7  @WRITEBITA
+0     14   1    2     24  1.2  reset_pin
+ Inline         1     67  1.2  CLK
+ Inline         1     67  1.2  LATCH
+ Inline         3    210  4.1  Export_LED
+0    528  39   34    281  3.9  LED
+0     24   2    1    108  2.9  set_dir
+0     21   2    1     80  1.7  set_duty
+0     29   2    0     67  1.6  MAIN
+ Inline         0    208  6.3  @cinit1
+
+Program metrics:
+    Functions               20
+    Statements              183
+    Comments                256
+    Volume (V)              6997
+    Difficulty (D)          73.6
+    Effort to implement (E) 514976
+    Time to implement (T)   7 hours, 57 minutes
+    Est Delivered Bugs (B)  2
+    Cyclomatic Complexity   19
+    Maintainability (MI)    71
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00003     4  0  
+00004-00035    50  0  
+00036-007FF  1286  708  
+00800-00FFF     0  2048  
+01000-017FF     0  2048  
+01800-01FFF     0  2048  
+
+
+

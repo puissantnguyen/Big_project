@@ -1,0 +1,5 @@
+Compiling C:\Users\USER\Desktop\211_2021-2022\application electronics\Code\Read_ENC_LED\main on 26-Thg12-21 at 13:25
+>>> Warning 244 "C:\Users\USER\Desktop\211_2021-2022\application electronics\Code\Read_ENC_LED\main.c" Line 114(1,1): Function Param:   8-bit value passed to function, only 8 MSB of duty will be set
+      Memory usage:   ROM=16%      RAM=6% - 21%
+      0 Errors,  1 Warnings.
+Build Successful.
