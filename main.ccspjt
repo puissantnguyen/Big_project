@@ -1,7 +1,7 @@
 [PROJECT]
 Target=main.hex
 Processor_Text=PIC16F877A
-CCSVersion=5.101
+CCSVersion=5.015
 Compiler=PCM
 [Target Data]
 FileList=main.c
@@ -175,11 +175,13 @@ t3=24
 4=..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\lcd.c
 t4=26
 Count=5
-5=FILE_HOAN_CHINH.c
+5=
 t5=1
 
 [fileformats]
 forcecoff=0
+[Directories]
+Include=C:\Program Files (x86)\PICC\Devices\;C:\Program Files (x86)\PICC\Drivers\
 [Units]
 Count=1
 1=main (main)

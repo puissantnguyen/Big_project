@@ -1,69 +1,105 @@
 
-ROM used:   1340/8192 (16%)
-            1340/8192 (16%) including unused fragments
+ROM used:   6303/8192 (77%)
+            7044/8192 (86%) including unused fragments
 
-            1.0 Average locations per line
-            7.3 Average locations per statement
+            1.8 Average locations per line
+            11.4 Average locations per statement
 
-RAM used:   23/368 (6%) at main() level
-            77/368 (21%) worst case
+RAM used:   102/368 (28%) at main() level
+            200/368 (54%) worst case
 
-Stack used: 3 worst case (2 in main + 1 for interrupts)
+Stack used: 8 worst case (5 in main + 3 for interrupts)
 Stack size: 8
 
 Lines Stmts  %   Files
 ----- ----- ---  -----
-  149    52  28  main.c
+  396   210  38  main.c
     7     0   0  main.h
-  707     0   0  ..\..\..\..\..\..\..\Program Files (x86)\PICC\Devices\16F877A.h
-  456   131  72  ..\..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\lcd.c
+  671     0   0  ..\..\..\..\..\..\Program Files (x86)\PICC\Devices\16F877A.h
+  249    88  16  lcd.h
+ 2229   257  46  ..\..\..\..\..\..\Program Files (x86)\PICC\Drivers\math.h
 ----- -----
- 1319   183 Total
+ 3552   555 Total
 
-Page ROM  %  RAM    Vol Diff  Functions:
----- --- --- ---    --- ----  ----------
-0     15   1    1             @delay_us1
- Inline         5    294  6.7  round
- Inline        13     59  4.2  @MULFF
- Inline        10    179  3.3  @FLT
-0     31   2    4    460  4.7  @SFTOI
-0     21   2    3    814  7.2  @DIV88
-0    321  24   16    208  6.3  @ADDFF
-0    202  15   14    354  4.7  @DIVFF
-0      7   1    0     17  1.3  EXT_isr
-0     26   2    0    102  2.9  TIMER0_isr
-0     15   1    2     24  1.2  set_pin
-0     32   2    6    294  6.7  @WRITEBITA
-0     14   1    2     24  1.2  reset_pin
- Inline         1     67  1.2  CLK
- Inline         1     67  1.2  LATCH
- Inline         3    210  4.1  Export_LED
-0    528  39   34    281  3.9  LED
-0     24   2    1    108  2.9  set_dir
-0     21   2    1     80  1.7  set_duty
-0     29   2    0     67  1.6  MAIN
- Inline         0    208  6.3  @cinit1
+Page ROM  %  RAM   Vol Diff  Functions:
+---- --- --- ---   --- ----  ----------
+0     85   1   10    59  4.2  @FLT
+ Inline         4   179  3.3  @SFTOI
+ Inline         2   460  4.7  @ITOF
+0    119   2   13   814  7.2  @MULFF
+0    326   5   16   208  6.3  @ADDFF
+0    204   3   14   103  1.4  @DIVFF
+ Inline         1   467  6.2  @delay_ms2
+0      8   0    0   115  1.7  @const783
+0    206   3    2   594  4.3  lcd_init
+ Inline         3   620  3.8  lcd_read_byte
+ Inline         2   204  3.2  lcd_read_nibble
+0    290   5    3   313  3.4  lcd_send_byte
+ Inline         1   336  1.9  lcd_send_nibble
+0     37   1    4   335  5.5  lcd_gotoxy
+0     70   1    1   304  2.4  lcd_putc
+0     22   0    1             @delay_ms3
+ Inline         1             @delay_us3
+1    121   2    0   181  2.2  MAIN
+ Inline         5   294  6.7  round
+ Inline         3             @DIV88
+ Inline         1    72  1.2  CLK
+ Inline         1    72  1.2  LATCH
+ Inline         2   210  4.1  Export_LED
+ Inline        34   281  3.9  LED
+0    139   2    9   188  4.0  set_speed
+0     24   0    1   108  2.9  set_dir
+0     19   0    1    80  1.7  set_duty
+ Inline        14   269  7.1  cal_position
+ Inline        10   213  4.8  integrate_speed
+3    900  14    4    92  1.6  display_current_point
+0      8   0    0   134  1.7  @const873
+ Inline         5             @PSTRINGCN7_781
+ Inline         5  2291  8.4  @FTOSD
+ Inline        13  2291  8.4  @DIV3232
+1    422   7   13   134  1.7  @PRINTF_L32D_781FPFPF
+2   1201  19    4  2464  8.9  ReadButton
+0     45   1    4   134  1.7  display_position
+0      4   0    0   429  3.6  @const884
+0    116   2    4   115  1.7  @PSTRINGC7_781
+2    595   9   10   258  5.3  display_speed
+0      9   0    0   429  3.6  @const888
+0     74   1    1   429  3.6  display_current_setting
+0      7   0    0   467  6.2  @const889
+0      7   0    0   467  6.2  @const890
+0      7   0    0   467  6.2  @const891
+0      7   0    0    84  1.7  @const892
+0      7   0    0   115  1.7  @const893
+0      7   0    0   490  6.5  @const894
+0     10   0    0    84  1.7  @goto11563
+ Inline        12   490  6.5  PIDOutput
+0     15   0    0    84  1.7  timer1_init
+0     15   0    0   115  1.7  timer0_init
+1   1049  17    0   233  3.7  TIMER1_isr
+0      7   0    0    17  1.3  EXT_isr
+0     26   0    0   102  2.9  TIMER0_isr
+ Inline         0             @cinit1
 
 Program metrics:
-    Functions               20
-    Statements              183
-    Comments                256
-    Volume (V)              6997
-    Difficulty (D)          73.6
-    Effort to implement (E) 514976
-    Time to implement (T)   7 hours, 57 minutes
-    Est Delivered Bugs (B)  2
-    Cyclomatic Complexity   19
-    Maintainability (MI)    71
+    Functions               51
+    Statements              555
+    Comments                560
+    Volume (V)              36866
+    Difficulty (D)          196.3
+    Effort to implement (E) 7238127
+    Time to implement (T)   111 hours, 42 minutes
+    Est Delivered Bugs (B)  12
+    Cyclomatic Complexity   140
+    Maintainability (MI)    52
 
  Segment     Used  Free
 -----------  ----  ----
 00000-00003     4  0  
-00004-00035    50  0  
-00036-007FF  1286  708  
-00800-00FFF     0  2048  
-01000-017FF     0  2048  
-01800-01FFF     0  2048  
+00004-0005E    91  0  
+0005F-007FF  1920  33  
+00800-00FFF  1592  456  
+01000-017FF  1796  252  
+01800-01FFF   900  1148  
 
 
 
