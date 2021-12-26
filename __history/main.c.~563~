@@ -29,15 +29,16 @@ float x3=0;
 float vi_tri;
 int temp,temp1,temp2;
 float errorC, errorP,P,I,D,PID,I0;
-float KP = 10;
-float KI = 0;
-float KD = 3;
+float KP;
+float KI;
+float KD;
+float IO=0;
 float SP,CP;
 long pulse, f;
 long count;
 float xSP;                            //Global position for setpoint
 float xCP;                            //Global current position
-int setPosion = 5;                        //Set position
+int setPosion;                        //Set position
 
 /*************************** Function Declaration *****************************/
 //Internal Function
@@ -56,7 +57,6 @@ void display_current_setting (int setPosition);
 void set_speed (float speed);
 float integrate_speed (float position, long pulse);
 void display_current_point (float position);
-void display_speed (long pulse);
 
 //Init function
 void timer1_init (void);
@@ -74,13 +74,13 @@ void main()
    lcd_init();
    timer0_init();
    timer1_init();
+   set_speed(-200);
    while(TRUE) {
    //TODO: User Code
       xSP = ReadButton();
       display_position(xSP);
       display_current_setting(setPosion);
       display_current_point(xCP);
-      display_speed(f);
       delay_ms(50);
    }
 }
@@ -172,12 +172,9 @@ void set_duty(int8 duty) // duty ~ 8bit, 0 - 255
 
 float cal_position(float x, long pulse) // feedback CP
 {
-   float temp;
-   if(input(In_dir) == 0)
-      temp = -(float) pulse*dt/4;
-   else
-      temp = (float) pulse*dt/4;
-   x = x + temp;
+   if(input(In_dir) == 1)
+      pulse = -pulse;
+   x = x + pulse*dt/4;
    return x;
 }
 
@@ -194,7 +191,7 @@ float integrate_speed (float position, long pulse) {
 void display_current_point (float position) {
    LED(position);
    lcd_gotoxy(1, 3);
-   printf(lcd_putc, "Current: %04.0f", position);
+   printf(lcd_putc, "Current: %04.0ld", f);
 }
 float ReadButton() {
    if(input(NUT_3)==1) {
@@ -276,10 +273,6 @@ float ReadButton() {
    if(x1<0) {
       vi_Tri= (-1)*(-x1*100+x2*10+x3);
    }
-   if(vi_Tri > 500)
-      vi_Tri = 500;
-   if(vi_Tri < -500)
-      vi_Tri = -500;
 
    temp=input(NUT_3);
    temp1=input(NUT_1);
@@ -291,18 +284,9 @@ void display_position (float position) {
    lcd_gotoxy(1,1);
    printf(lcd_putc,"VI TRI:");
    lcd_gotoxy(10,1);
-   printf(lcd_putc,"%04.0f",vi_tri);
+   printf(lcd_putc,"%03.0f",vi_tri);
 }
 
-void display_speed (long pulse) {
-   float temp;
-   if(input(In_dir) == 0)
-      temp = -(float) pulse*60/200;
-   else
-      temp = (float) pulse*60/200;
-   lcd_gotoxy(1, 4);
-   printf(lcd_putc, "SPEED: %03.0f RPM", temp);
-}
 void display_current_setting (int setPosition) {
    lcd_gotoxy(1, 2);
    switch(setPosion) {
@@ -330,25 +314,25 @@ float PIDOutput(float SP, float CP)
 {
    errorC = SP-CP;
    P= KP*errorC;
-   I = I + KI*(errorC+errorP)/2*dt;
+   I = IO+KI*(errorC+errorP)/2*dt;
    D = KD*(errorC-errorP)/dt;
    PID = P+I+D;
    if(PID>250)
    {
       PID=250;
    }
-   if(PID < -250)
+   if(PID<=-250)
    {
       PID=-250;
    }
-   errorP = errorC;
+   IO=I;
    return PID;
 }
 
 /******************************* Init Function ********************************/
 void timer1_init (void) {
-   setup_timer_1(T1_INTERNAL|T1_DIV_BY_1);
-   set_timer1(15536);
+   setup_timer_1(RTCC_INTERNAL|RTCC_DIV_16|RTCC_8_bit);
+   SET_TIMER1(15536);
    enable_interrupts(INT_TIMER1);
    enable_interrupts(GlOBAL);
 }
@@ -365,15 +349,8 @@ void timer0_init(void) {
 void TIMER1_isr(void)
 {
    xCP = integrate_speed(xCP, f);
-   output_toggle(PIN_C6);
-   if (setPosion == RUN) {
-      PID = PIDOutput(xSP, xCP);
-      set_speed(PID);
-   } else {
-      PID = 0;
-      errorP = 0;
-      set_speed(0);
-   }
+   PORTCbits.RC6 = 1 - PORTCbits.RC6;
+   // PIDOutput(SP,CP);
 }
 
 #INT_EXT
